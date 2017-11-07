@@ -1,6 +1,7 @@
 defmodule FllEventLivetext.EventImporter.Worker do
   use GenServer
 
+  alias FllEventLivetext.Matches
   alias FllEventLivetext.Roster
 
   def start_link(args) do
@@ -50,7 +51,7 @@ defmodule FllEventLivetext.EventImporter.Worker do
   end
 
   def handle_call({:import_match, match}, _from, state) do
-    {:reply, :ok, state}
+    {:reply, Matches.set(match), state}
   end
 end
 

@@ -14,4 +14,8 @@ defmodule FllEventLivetext.Roster do
   def get(number) when is_number(number) do
     Worker.get(number)
   end
+
+  def flush_table do
+    Worker.flush_table()
+  end
 end

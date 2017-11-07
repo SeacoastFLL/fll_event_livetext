@@ -62,4 +62,13 @@ defmodule FllEventLivetext.RosterTest do
 
   end
 
+  describe "flush_table/0" do
+
+    test "removes all team records" do
+      Roster.set(1234, "Team 1234")
+      assert Roster.get(1234) == {:ok, "Team 1234"}
+      Roster.flush_table()
+      assert Roster.list() == []
+    end
+  end
 end

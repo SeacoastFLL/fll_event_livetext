@@ -12,7 +12,8 @@ defmodule FllEventLivetext.Application do
       supervisor(FllEventLivetextWeb.Endpoint, []),
       # Start your own worker by calling: FllEventLivetext.Worker.start_link(arg1, arg2, arg3)
       # worker(FllEventLivetext.Worker, [arg1, arg2, arg3]),
-      supervisor(FllEventLivetext.Roster.Supervisor, []),
+      supervisor(FllEventLivetext.EventImporter.Supervisor, []),
+      supervisor(FllEventLivetext.Roster.Supervisor, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

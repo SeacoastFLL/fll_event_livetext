@@ -17,6 +17,10 @@ defmodule FllEventLivetextWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", DashboardController, :index
+    scope "/osc", as: :osc do
+      put "/match/:match", OscController, :update, as: :match
+      put "/team/:team/:side", OscController, :update, as: :team
+    end
   end
 
   # Other scopes may use custom stacks.

@@ -14,7 +14,8 @@ defmodule FllEventLivetext.Application do
       # worker(FllEventLivetext.Worker, [arg1, arg2, arg3]),
       supervisor(FllEventLivetext.EventImporter.Supervisor, []),
       supervisor(FllEventLivetext.Matches.Supervisor, []),
-      supervisor(FllEventLivetext.Roster.Supervisor, [])
+      supervisor(FllEventLivetext.Roster.Supervisor, []),
+      supervisor(FllEventLivetext.Qlab.Supervisor, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

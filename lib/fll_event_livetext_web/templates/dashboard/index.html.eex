@@ -1,15 +1,50 @@
-<div class="row marketing">
-  <div class="col-lg-6">
-    <h4>Teams</h4>
-    <ul>
-      <%= for team <- @teams do %><li><strong><%= team_number(team) %></strong> <%= team_name(team) %></li><% end %>
-    </ul>
+<div class="row">
+  <div class="matches">
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Match</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Red Team</th>
+          <th>Blue Team</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for match <- @matches do %>
+          <tr>
+            <td><%= link "Update", to: osc_match_path(@conn, :update, match_number(match)), method: :put, class: "btn btn-block btn-default btn-xs" %></td>
+            <td><%= match_number(match) %></td>
+            <td><%= match_start(match) %></td>
+            <td><%= match_end(match) %></td>
+            <td><%= match_red_team(match) %></td>
+            <td><%= match_blue_team(match) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-
-  <div class="col-lg-6">
-    <h4>Matches</h4>
-    <ul>
-      <%= for match <- @matches do %><li>Match <%= match_number(match) %>: <strong><%= match_time(match) %></strong> <%= match_red_team(match) %> <%= match_blue_team(match) %></li><% end %>
-    </ul>
+  <div class="teams">
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Number</th>
+          <th>Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for team <- @teams do %>
+          <tr>
+            <td><%= link "Update Red", to: osc_team_path(@conn, :update, team_number(team), "red"), method: :put, class: "btn btn-block btn-default btn-xs" %></td>
+            <td><%= team_number(team) %></td>
+            <td><%= team_name(team) %></td>
+            <td><%= link "Update Blue", to: osc_team_path(@conn, :update, team_number(team), "blue"), method: :put, class: "btn btn-block btn-default btn-xs" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>

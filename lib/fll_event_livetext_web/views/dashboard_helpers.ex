@@ -16,8 +16,12 @@ defmodule FllEventLivetextWeb.DashboardHelpers do
     Matches.match_number(match)
   end
 
-  def match_time(match) when is_tuple(match) do
-    "#{Matches.match_start(match)} - #{Matches.match_end(match)}"
+  def match_start(match) when is_tuple(match) do
+    Matches.match_start(match)
+  end
+
+  def match_end(match) when is_tuple(match) do
+    Matches.match_end(match)
   end
 
   def match_red_team(match) when is_tuple(match) do

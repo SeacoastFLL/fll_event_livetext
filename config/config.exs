@@ -18,6 +18,15 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# Qlab configuration
+config :fll_event_livetext, :qlab,
+  addrs: [
+    {{127,0,0,1}, 53535}
+  ],
+  red: "RN",
+  blue: "LN"
+import_config "qlab*.exs"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

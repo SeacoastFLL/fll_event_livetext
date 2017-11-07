@@ -1,6 +1,8 @@
 defmodule FllEventLivetext.Qlab.Worker do
   use GenServer
 
+  alias FllEventLivetext.Roster
+
   def start_link(args) do
     GenServer.start_link(__MODULE__, args, name: __MODULE__)
   end
@@ -16,6 +18,22 @@ defmodule FllEventLivetext.Qlab.Worker do
   end
 
   def handle_cast({:update, team, side}, state) do
+    addrs = Application.get_env(:fll_event_livetext, :qlab)[:addrs]
+
+    cue =
+      case side do
+        "red" -> Application.get_env(:fll_event_livetext, :qlab)[:red]
+        "blue" -> Application.get_env(:fll_event_livetext, :qlab)[:blue]
+        _ -> "none"
+      end
+
+    Enum.each(addrs, fn(addr) ->
+      with socket <- Socket.UDP.open!,
+           :ok <- Socket.Datagram.send(socket, "/cue/#{cue}/liveText \"#{Roster.team_number(team)} #{Roster.team_name(team)}\"", addr),
+           :ok <- Socket.close(socket)
+      do
+      end
+    end)
 
     {:noreply, state}
   end

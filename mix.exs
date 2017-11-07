@@ -39,7 +39,8 @@ defmodule FllEventLivetext.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:file_system, "~> 0.2"},
-      {:nimble_csv, "~> 0.3"}
+      {:nimble_csv, "~> 0.3"},
+      {:socket, "~> 0.3"}
     ]
   end
 end

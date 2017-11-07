@@ -1,4 +1,4 @@
-defmodule FllEventLivetextWeb.PageController do
+defmodule FllEventLivetextWeb.DashboardController do
   use FllEventLivetextWeb, :controller
 
   def index(conn, _params) do

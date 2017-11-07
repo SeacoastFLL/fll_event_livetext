@@ -17,11 +17,14 @@ defmodule FllEventLivetext.EventImporter.CsvWatcher do
     {:ok, pid} = FileSystem.start_link(dirs: [csv_path])
     FileSystem.subscribe(pid)
 
+    # Import event CSV on start up by queuing a file created message
+    Process.send_after(__MODULE__, {:file_event, nil, {csv_path, [:created]}}, 1000)
+
     {:ok, %{watcher: pid}}
   end
 
   def handle_info({:file_event, _from, {path, events}}, %{watcher: _pid} = state) do
-    if Enum.member?(events, :modified) || Enum.member?(events, :created) do
+    if File.exists?(path) && (Enum.member?(events, :modified) || Enum.member?(events, :created)) do
       Logger.info("Event CSV updated")
       with {:ok, {teams, matches}} <- EventImporter.parse_csv(path),
            :ok <- EventImporter.reset(),

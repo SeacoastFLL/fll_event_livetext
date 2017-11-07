@@ -1,36 +1,15 @@
-<div class="jumbotron">
-  <h2><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h2>
-  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
-</div>
-
 <div class="row marketing">
   <div class="col-lg-6">
-    <h4>Resources</h4>
+    <h4>Teams</h4>
     <ul>
-      <li>
-        <a href="http://phoenixframework.org/docs/overview">Guides</a>
-      </li>
-      <li>
-        <a href="https://hexdocs.pm/phoenix">Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
+      <%= for team <- @teams do %><li><strong><%= team_number(team) %></strong> <%= team_name(team) %></li><% end %>
     </ul>
   </div>
 
   <div class="col-lg-6">
-    <h4>Help</h4>
+    <h4>Matches</h4>
     <ul>
-      <li>
-        <a href="http://groups.google.com/group/phoenix-talk">Mailing list</a>
-      </li>
-      <li>
-        <a href="http://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">@elixirphoenix</a>
-      </li>
+      <%= for match <- @matches do %><li>Match <%= match_number(match) %>: <strong><%= match_time(match) %></strong> <%= match_red_team(match) %> <%= match_blue_team(match) %></li><% end %>
     </ul>
   </div>
 </div>

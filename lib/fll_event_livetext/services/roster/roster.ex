@@ -18,4 +18,12 @@ defmodule FllEventLivetext.Roster do
   def flush_table do
     Worker.flush_table()
   end
+
+  def team_number(team) when is_tuple(team) do
+    elem(team, 0)
+  end
+
+  def team_name(team) when is_tuple(team) do
+    elem(team, 1)
+  end
 end

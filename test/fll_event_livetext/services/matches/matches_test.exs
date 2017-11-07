@@ -13,7 +13,7 @@ defmodule FllEventLivetext.MatchesTest do
 
     test "returns all matches" do
       Matches.set(@match)
-      assert Matches.list == [{1, @match}]
+      assert Matches.list == [@match]
     end
 
   end

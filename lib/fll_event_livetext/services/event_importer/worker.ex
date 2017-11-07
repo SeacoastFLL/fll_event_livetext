@@ -16,7 +16,7 @@ defmodule FllEventLivetext.EventImporter.Worker do
     Enum.each(teams, fn(team) -> import_team(team) end)
   end
 
-  def import_team(team) do
+  def import_team(team) when is_tuple(team) do
     GenServer.call(__MODULE__, {:import_team, team})
   end
 
@@ -24,7 +24,7 @@ defmodule FllEventLivetext.EventImporter.Worker do
     Enum.each(matches, fn(match) -> import_match(match) end)
   end
 
-  def import_match(match) do
+  def import_match(match) when is_tuple(match) do
     GenServer.call(__MODULE__, {:import_match, match})
   end
 
@@ -47,7 +47,7 @@ defmodule FllEventLivetext.EventImporter.Worker do
   end
 
   def handle_call({:import_team, team}, _from, state) do
-    {:reply, Roster.set(elem(team, 0), elem(team, 1)), state}
+    {:reply, Roster.set(team), state}
   end
 
   def handle_call({:import_match, match}, _from, state) do

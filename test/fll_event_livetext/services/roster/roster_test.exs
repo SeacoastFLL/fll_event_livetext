@@ -3,6 +3,8 @@ defmodule FllEventLivetext.RosterTest do
 
   alias FllEventLivetext.Roster
 
+  @team {1234, "Team 1234"}
+
   setup do
     Roster.Worker.flush_table()
   end
@@ -10,8 +12,8 @@ defmodule FllEventLivetext.RosterTest do
   describe "list/0" do
 
     test "returns all teams on the roster" do
-      Roster.set(1234, "Team 1234")
-      assert Roster.list == [{1234, "Team 1234"}]
+      Roster.set(@team)
+      assert Roster.list() == [@team]
     end
 
   end
@@ -27,8 +29,8 @@ defmodule FllEventLivetext.RosterTest do
   describe "get/1" do
 
     test "returns the team name" do
-      Roster.set(1234, "Team 1234")
-      assert Roster.get(1234) == {:ok, "Team 1234"}
+      Roster.set(@team)
+      assert Roster.get(1234) == {:ok, @team}
     end
 
   end
@@ -45,8 +47,8 @@ defmodule FllEventLivetext.RosterTest do
 
     test "creates a record for the team" do
       assert Roster.get(1234) == {:error, "No team name for 1234"}
-      Roster.set(1234, "Team 1234")
-      assert Roster.get(1234) == {:ok, "Team 1234"}
+      Roster.set(@team)
+      assert Roster.get(1234) == {:ok, @team}
     end
 
   end
@@ -54,10 +56,10 @@ defmodule FllEventLivetext.RosterTest do
   describe "set/2 (replace)" do
 
     test "overwrites a record for the team" do
-      Roster.set(1234, "Team 1234")
-      assert Roster.get(1234) == {:ok, "Team 1234"}
-      Roster.set(1234, "Blind Badgers")
-      assert Roster.get(1234) == {:ok, "Blind Badgers"}
+      Roster.set(@team)
+      assert Roster.get(1234) == {:ok, @team}
+      Roster.set({1234, "Blind Badgers"})
+      assert Roster.get(1234) == {:ok, {1234, "Blind Badgers"}}
     end
 
   end
@@ -65,8 +67,8 @@ defmodule FllEventLivetext.RosterTest do
   describe "flush_table/0" do
 
     test "removes all team records" do
-      Roster.set(1234, "Team 1234")
-      assert Roster.get(1234) == {:ok, "Team 1234"}
+      Roster.set(@team)
+      assert Roster.get(1234) == {:ok, @team}
       Roster.flush_table()
       assert Roster.list() == []
     end

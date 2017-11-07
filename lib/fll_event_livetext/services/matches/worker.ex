@@ -31,6 +31,7 @@ defmodule FllEventLivetext.Matches.Worker do
     matches =
       :ets.tab2list(state.table)
       |> Enum.sort(fn(a, b) -> elem(a, 0) <= elem(b, 0) end)
+      |> Enum.map(fn(record) -> elem(record, 1) end)
 
     {:reply, matches, state}
   end

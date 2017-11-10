@@ -20,11 +20,12 @@ config :logger, :console,
 
 # Qlab configuration
 config :fll_event_livetext, :qlab,
-  addrs: [
-    {{127,0,0,1}, 53535}
-  ],
-  red: "RN",
-  blue: "LN"
+  targets: [
+    {{{127,0,0,1}, 53535}, %{name: "LN", number: nil}, %{name: "RN", number: nil}},
+    {{{127,0,0,1}, 53535}, %{name: "LUNLN", number: nil}, %{name: "LUNRN", number: nil}},
+    {{{127,0,0,1}, 53535}, %{name: "RUNLN", number: nil}, %{name: "RUNRN", number: nil}},
+    {{{127,0,0,1}, 53535}, %{name: "BNAME", number: "BNUM"}, %{name: "RNAME", number: "RNUM"}},
+  ]
 import_config "qlab*.exs"
 
 # Import environment specific config. This must remain at the bottom

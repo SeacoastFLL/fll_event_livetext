@@ -18,23 +18,33 @@ defmodule FllEventLivetext.Qlab.Worker do
   end
 
   def handle_cast({:update, team, side}, state) do
-    addrs = Application.get_env(:fll_event_livetext, :qlab)[:addrs]
+    Application.get_env(:fll_event_livetext, :qlab)[:targets]
+    |> Enum.each(fn(target) ->
+        {addr, ltext, rtext} = target
 
-    cue =
-      case side do
-        "red" -> Application.get_env(:fll_event_livetext, :qlab)[:red]
-        "blue" -> Application.get_env(:fll_event_livetext, :qlab)[:blue]
-        _ -> "none"
-      end
+        {name_cue, number_cue} =
+          case side do
+            "blue" -> {ltext.name, ltext.number}
+            "red" -> {rtext.name, rtext.number}
+            _ -> {nil, nil}
+          end
 
-    Enum.each(addrs, fn(addr) ->
-      with socket <- Socket.UDP.open!,
-           :ok <- Socket.Datagram.send(socket, "/cue/#{cue}/liveText \"#{Roster.team_number(team)} #{Roster.team_name(team)}\"", addr),
-           :ok <- Socket.close(socket)
-      do
-      end
-    end)
+        if number_cue do
+          send_cue(addr, name_cue, Roster.team_name(team))
+          send_cue(addr, number_cue, Roster.team_number(team))
+        else
+          send_cue(addr, name_cue, "#{Roster.team_number(team)} #{Roster.team_name(team)}")
+        end
+      end)
 
     {:noreply, state}
+  end
+
+  defp send_cue(addr, cue, text) do
+    with socket <- Socket.UDP.open!,
+         :ok <- Socket.Datagram.send(socket, "/cue/#{cue}/liveText \"#{text}\"", addr),
+         :ok <- Socket.close(socket)
+    do
+    end
   end
 end

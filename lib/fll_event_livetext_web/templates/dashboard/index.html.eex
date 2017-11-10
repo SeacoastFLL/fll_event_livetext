@@ -7,8 +7,8 @@
           <th>Match</th>
           <th>Start</th>
           <th>End</th>
-          <th>Red Team</th>
           <th>Blue Team</th>
+          <th>Red Team</th>
         </tr>
       </thead>
       <tbody>
@@ -18,8 +18,8 @@
             <td><%= match_number(match) %></td>
             <td><%= match_start(match) %></td>
             <td><%= match_end(match) %></td>
-            <td><%= match_red_team(match) %></td>
             <td><%= match_blue_team(match) %></td>
+            <td><%= match_red_team(match) %></td>
           </tr>
         <% end %>
       </tbody>
@@ -38,10 +38,10 @@
       <tbody>
         <%= for team <- @teams do %>
           <tr>
-            <td><%= link "Update Red", to: osc_team_path(@conn, :update, team_number(team), "red"), method: :put, class: "btn btn-block btn-default btn-xs" %></td>
+            <td><%= link "Update Blue", to: osc_team_path(@conn, :update, team_number(team), "blue"), method: :put, class: "btn btn-block btn-default btn-xs" %></td>
             <td><%= team_number(team) %></td>
             <td><%= team_name(team) %></td>
-            <td><%= link "Update Blue", to: osc_team_path(@conn, :update, team_number(team), "blue"), method: :put, class: "btn btn-block btn-default btn-xs" %></td>
+            <td><%= link "Update Red", to: osc_team_path(@conn, :update, team_number(team), "red"), method: :put, class: "btn btn-block btn-default btn-xs" %></td>
           </tr>
         <% end %>
       </tbody>
